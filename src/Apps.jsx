@@ -91,8 +91,9 @@ function App() {
       </form>
 
       {taskList.map((task, index) =>
-        task.id === updateTask ? (
-          <ul className="flex-col-center" key={index}>
+        task.id === updateTask ? 
+        (
+          <ul className="flex-col-center" key={Math.random()}>
             <li>
               {task.id}
               <input
@@ -110,7 +111,9 @@ function App() {
               <button onClick={updateHandler}>Update</button>
             </li>
           </ul>
-        ) : (
+        ) 
+        :
+         (
           <ul key={index} className="flex-col-center">
             <li>
               {task.id} {task.taskName} {task.status}

@@ -5,8 +5,6 @@ import Button from "./UI/Button";
 function App() {
   const [taskList, setTaskList] = useState([]);
 
-  console.log("tasklList", taskList)
-
   let id = taskList.length + 1;
   const [task, setTask] = useState({ id: id, taskName: "", status: "" });
 

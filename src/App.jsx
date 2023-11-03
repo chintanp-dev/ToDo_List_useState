@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import "./Tasks/TaskList.css";
+import TaskList from "./Tasks/TaskList";
 import Button from "./UI/Button";
+
+import { useContext } from "react";
 
 function App() {
   const [taskList, setTaskList] = useState([]);
@@ -37,7 +39,6 @@ function App() {
 
   function handleInput(event) {
     setTaskList((taskList) => {
-
       taskList.map((li) => {
         return li.id === updateTask
           ? (li[event.target.name] = event.target.value)
@@ -88,36 +89,14 @@ function App() {
         </div>
       </form>
 
-      {taskList.map((task, index) =>
-        task.id === updateTask ? (
-          <ul className="flex-col-center" key={index}>
-            <li>
-              {task.id}
-              <input
-                type="text"
-                name="taskName"
-                value={task.taskName || ""}
-                onChange={handleInput}
-              />
-              <input
-                type="text"
-                name="status"
-                value={task.status || ""}
-                onChange={handleInput}
-              />
-              <button onClick={updateHandler}>Update</button>
-            </li>
-          </ul>
-        ) : (
-          <ul key={index} className="flex-col-center">
-            <li>
-              {task.id} {task.taskName} {task.status}
-              <button onClick={() => editHandler(task.id)}>Edit</button>
-              <button onClick={() => removeHandler(task.id)}>Remove</button>
-            </li>
-          </ul>
-        )
-      )}
+      <TaskList
+        taskList={taskList}
+        updateTask={updateTask}
+        updateHandler={updateHandler}
+        editHandler={editHandler}
+        handleInput={handleInput}
+        removeHandler={removeHandler}
+      />
     </>
   );
 }

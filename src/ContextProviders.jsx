@@ -10,8 +10,8 @@ export function TaskListProvider({ children }) {
   const [task, setTask] = useState([{ id: id, taskName: "", status: "" }]);
   const [updateTask, setUpdateTask] = useState();
 
-  const ref = useRef()
-  const reff = useRef()
+  const ref = useRef();
+  const reff = useRef();
 
   const taskChangeHandler = (event) => {
     setTask((task) => {
@@ -21,23 +21,16 @@ export function TaskListProvider({ children }) {
   };
 
   let { taskName, status } = task;
-  
+
   const addTaskHandler = (event) => {
     event.preventDefault();
-  ref.current.value = ""
-  reff.current.value = ""
-
+    ref.current.value = "";
+    reff.current.value = "";
 
     if (taskName === "" && status === "") {
       alert("please enter Something");
     } else {
       setTaskList([...taskList, { id, taskName, status }]);
-
-      //   setTask((state) => {
-      //     ({ id: id, taskName: "", status: "" });
-      //     state.id = id;
-      //     return structuredClone(state);
-      //   });
     }
   };
 
@@ -67,16 +60,32 @@ export function TaskListProvider({ children }) {
     setTaskList(newTaskList);
   };
 
+
+  const [time, setTime] = useState();
+
+
+  const timer = setInterval(function () {
+    console.log(timer );
+  }, 1000);
+
+  function stopTimer() {
+    clearInterval(timer);  
+  }
+
+
+
   return (
     <taskListContext.Provider
       value={{
         ref,
         reff,
+        timer,
         task,
         setTask,
         taskList,
         setTaskList,
         updateTask,
+        stopTimer,
         setUpdateTask,
         addTaskHandler,
         taskChangeHandler,

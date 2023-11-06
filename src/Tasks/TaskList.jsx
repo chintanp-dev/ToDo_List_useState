@@ -5,7 +5,9 @@ import "./TaskList.css";
 
 const TaskList = () => {
   const {
+    timer,
     taskList,
+    stopTimer,
     removeHandler,
     updateHandler,
     editHandler,
@@ -19,30 +21,31 @@ const TaskList = () => {
         task.id === updateTask ? (
           <ul className="flex-col-center" key={index}>
             <li>
-              {task.id}
+              {task.id} {" "}
               <input
                 type="text"
                 placeholder="Enter Task Name"
                 name="taskName"
                 value={task.taskName || ""}
                 onChange={handleInput}
-              />
+              /> {" "}
               <input
                 type="text"
                 placeholder="Enter Status"
                 name="status"
                 value={task.status || ""}
                 onChange={handleInput}
-              />
-              <button onClick={updateHandler}>Update</button>
+              /> {" "}
+              <button onClick={updateHandler}>Update</button> {" "}
             </li>
           </ul>
         ) : (
           <ul key={index} className="flex-col-center">
             <li>
-              {task.id} {task.taskName} {task.status}
-              <button onClick={() => editHandler(task.id)}>Edit</button>
-              <button onClick={() => removeHandler(task.id)}>Remove</button>
+              {task.id} {task.taskName} {task.status} {timer} {" "}
+              <button onClick={() => editHandler(task.id)}>Edit</button>{" "}
+              <button onClick={() => removeHandler(task.id)}>Remove</button>{" "}
+              <button onClick={() => stopTimer(task.id)}>Stop</button>
             </li>
           </ul>
         )

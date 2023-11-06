@@ -1,11 +1,22 @@
-import React from "react"
+import React from "react";
+import { useContext } from "react";
+import { taskListContext } from "../ContextProviders";
 import "./TaskList.css";
 
-const TaskList = (props) => {
-    return (
-        <>
-      {props.taskList.map((task, index) =>
-        task.id === props.updateTask ? (
+const TaskList = () => {
+  const {
+    taskList,
+    removeHandler,
+    updateHandler,
+    editHandler,
+    handleInput,
+    updateTask,
+  } = useContext(taskListContext);
+
+  return (
+    <>
+      {taskList.map((task, index) =>
+        task.id === updateTask ? (
           <ul className="flex-col-center" key={index}>
             <li>
               {task.id}
@@ -13,29 +24,29 @@ const TaskList = (props) => {
                 type="text"
                 name="taskName"
                 value={task.taskName || ""}
-                onChange={props.handleInput}
+                onChange={handleInput}
               />
               <input
                 type="text"
                 name="status"
                 value={task.status || ""}
-                onChange={props.handleInput}
+                onChange={handleInput}
               />
-              <button onClick={props.updateHandler}>Update</button>
+              <button onClick={updateHandler}>Update</button>
             </li>
           </ul>
         ) : (
           <ul key={index} className="flex-col-center">
             <li>
               {task.id} {task.taskName} {task.status}
-              <button onClick={() => props.editHandler(task.id)}>Edit</button>
-              <button onClick={() => props.removeHandler(task.id)}>Remove</button>
+              <button onClick={() => editHandler(task.id)}>Edit</button>
+              <button onClick={() => removeHandler(task.id)}>Remove</button>
             </li>
           </ul>
         )
       )}
     </>
-    )
-}
+  );
+};
 
-export default TaskList
+export default TaskList;

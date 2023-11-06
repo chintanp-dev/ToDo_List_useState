@@ -1,15 +1,17 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useRef } from "react";
 
 export const taskListContext = createContext();
 
 export function TaskListProvider({ children }) {
-
   const [taskList, setTaskList] = useState([]);
-  
+
   let id = taskList.length + 1;
 
   const [task, setTask] = useState([{ id: id, taskName: "", status: "" }]);
   const [updateTask, setUpdateTask] = useState();
+
+  const ref = useRef()
+  const reff = useRef()
 
   const taskChangeHandler = (event) => {
     setTask((task) => {
@@ -19,20 +21,23 @@ export function TaskListProvider({ children }) {
   };
 
   let { taskName, status } = task;
-
+  
   const addTaskHandler = (event) => {
     event.preventDefault();
+  ref.current.value = ""
+  reff.current.value = ""
+
 
     if (taskName === "" && status === "") {
       alert("please enter Something");
     } else {
       setTaskList([...taskList, { id, taskName, status }]);
 
-      setTask((state) => {
-        ({ id: id, taskName: "", status: "" });
-        state.id = id;
-        return structuredClone(state);
-      });
+      //   setTask((state) => {
+      //     ({ id: id, taskName: "", status: "" });
+      //     state.id = id;
+      //     return structuredClone(state);
+      //   });
     }
   };
 
@@ -65,6 +70,8 @@ export function TaskListProvider({ children }) {
   return (
     <taskListContext.Provider
       value={{
+        ref,
+        reff,
         task,
         setTask,
         taskList,

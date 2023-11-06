@@ -22,12 +22,14 @@ const TaskList = () => {
               {task.id}
               <input
                 type="text"
+                placeholder="Enter Task Name"
                 name="taskName"
                 value={task.taskName || ""}
                 onChange={handleInput}
               />
               <input
                 type="text"
+                placeholder="Enter Status"
                 name="status"
                 value={task.status || ""}
                 onChange={handleInput}

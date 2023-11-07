@@ -6,15 +6,60 @@ export function TaskListProvider({ children }) {
   const [taskList, setTaskList] = useState([]);
 
   let id = taskList.length + 1;
-
-  const [task, setTask] = useState([{ id: id, taskName: "", status: "" }]);
-  const [updateTask, setUpdateTask] = useState();
-
-  const [time, setTime] = useState(0);
-  const [active, notActive] = useState();
+  let timeId; 
 
   const ref = useRef();
   const reff = useRef();
+
+  const [task, setTask] = useState([{ id: id, taskName: "", status: "", timeId: timeId }]);
+  console.log(timeId);
+  const [updateTask, setUpdateTask] = useState();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const [time, setTime] = useState(0);
+
+  const [active, notActive] = useState();
+
+    useEffect(() => {
+
+    if (active) {
+      timeId = setInterval(() => {
+        setTime((time) => time + 1);
+      }, 1000);
+    } else {
+      clearInterval(timeId);
+    }
+    return () => clearInterval(timeId);
+  }, [active]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
 
   const taskChangeHandler = (event) => {
     setTask((task) => {
@@ -64,54 +109,6 @@ export function TaskListProvider({ children }) {
     setTaskList(newTaskList);
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  useEffect(() => {
-    let id;
-
-    if (active) {
-      id = setInterval(() => {
-        setTime((time) => time + 1);
-      }, 1000);
-    } else {
-      clearInterval(id);
-    }
-    return () => clearInterval(id);
-  }, [active]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <taskListContext.Provider
       value={{
@@ -130,6 +127,7 @@ export function TaskListProvider({ children }) {
         updateHandler,
         removeHandler,
         time,
+        timeId,
         notActive,
       }}
     >

@@ -4,13 +4,13 @@ import Button from "./UI/Button";
 import { taskListContext } from "./ContextProviders";
 
 function App() {
-  const { addTaskHandler, taskChangeHandler, ref, reff } = useContext(taskListContext);
+  const { addTaskHandler, taskChangeHandler, ref, reff, timeId } = useContext(taskListContext);
 
  
 
   return (
     <>
-      <form onSubmit={addTaskHandler}>
+      <form onSubmit={addTaskHandler} key={timeId}>
         <div className="flex-col-center">
           Task Name
           <input

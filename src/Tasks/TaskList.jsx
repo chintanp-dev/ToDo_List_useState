@@ -45,12 +45,7 @@ const TaskList = () => {
               {task.id} {task.taskName} {task.status}{" "}
               <button onClick={() => editHandler(task.id)}>Edit</button>{" "}
               <button onClick={() => removeHandler(task.id)}>Remove</button>{" "}
-              <button onClick={() => notActive(true)}>
-                Start
-              </button>
-              {" "}
-              {time}
-              {" "}
+              <button onClick={() => notActive(true)}>Start</button> {time}{" "}
               <button onClick={() => notActive(false)}>Stop</button>
             </li>
           </ul>

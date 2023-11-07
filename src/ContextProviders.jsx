@@ -1,4 +1,4 @@
-import React, { createContext, useState, useRef } from "react";
+import React, { createContext, useState, useRef, useEffect } from "react";
 
 export const taskListContext = createContext();
 
@@ -9,6 +9,9 @@ export function TaskListProvider({ children }) {
 
   const [task, setTask] = useState([{ id: id, taskName: "", status: "" }]);
   const [updateTask, setUpdateTask] = useState();
+
+  const [time, setTime] = useState(0);
+  const [active, notActive] = useState();
 
   const ref = useRef();
   const reff = useRef();
@@ -30,6 +33,7 @@ export function TaskListProvider({ children }) {
     if (taskName === "" && status === "") {
       alert("please enter Something");
     } else {
+      notActive(true);
       setTaskList([...taskList, { id, taskName, status }]);
     }
   };
@@ -61,16 +65,50 @@ export function TaskListProvider({ children }) {
   };
 
 
-  const [time, setTime] = useState();
 
 
-  const timer = setInterval(function () {
-    console.log(timer );
-  }, 1000);
 
-  function stopTimer() {
-    clearInterval(timer);  
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    let id;
+
+    if (active) {
+      id = setInterval(() => {
+        setTime((time) => time + 1);
+      }, 1000);
+    } else {
+      clearInterval(id);
+    }
+    return () => clearInterval(id);
+  }, [active]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -79,13 +117,11 @@ export function TaskListProvider({ children }) {
       value={{
         ref,
         reff,
-        timer,
         task,
         setTask,
         taskList,
         setTaskList,
         updateTask,
-        stopTimer,
         setUpdateTask,
         addTaskHandler,
         taskChangeHandler,
@@ -93,6 +129,8 @@ export function TaskListProvider({ children }) {
         editHandler,
         updateHandler,
         removeHandler,
+        time,
+        notActive,
       }}
     >
       {children}

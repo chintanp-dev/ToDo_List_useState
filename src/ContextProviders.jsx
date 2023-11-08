@@ -6,13 +6,14 @@ export function TaskListProvider({ children }) {
   const [taskList, setTaskList] = useState([]);
 
   let id = taskList.length + 1;
-  let timeId; 
+  let timeId;
 
   const ref = useRef();
   const reff = useRef();
 
-  const [task, setTask] = useState([{ id: id, taskName: "", status: "", timeId: timeId }]);
-  console.log(timeId);
+  const [task, setTask] = useState([
+    { id: id, taskName: "", status: "", timeId: timeId },
+  ]);
   const [updateTask, setUpdateTask] = useState();
 
 
@@ -27,13 +28,10 @@ export function TaskListProvider({ children }) {
 
 
 
-
   const [time, setTime] = useState(0);
-
   const [active, notActive] = useState();
 
-    useEffect(() => {
-
+  useEffect(() => {
     if (active) {
       timeId = setInterval(() => {
         setTime((time) => time + 1);
@@ -44,19 +42,30 @@ export function TaskListProvider({ children }) {
     return () => clearInterval(timeId);
   }, [active]);
 
-
-
-
-
-
-
-
-
-
-
-
-
+  const startButton = (timeId) => {
+    notActive(true) 
+    timeId(0)
   
+  }
+  const stopButton = (timeId) => {
+    notActive(false)
+    timeId(0)
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -129,6 +138,8 @@ export function TaskListProvider({ children }) {
         time,
         timeId,
         notActive,
+        startButton,
+        stopButton
       }}
     >
       {children}

@@ -6,69 +6,19 @@ export function TaskListProvider({ children }) {
   const [taskList, setTaskList] = useState([]);
 
   let id = taskList.length + 1;
-  let timeId;
 
   const ref = useRef();
   const reff = useRef();
 
-  const [task, setTask] = useState([
-    { id: id, taskName: "", status: "", timeId: timeId },
-  ]);
+  const [task, setTask] = useState({
+    id: id,
+    taskName: "",
+    status: "",
+    counterId: 0,
+    counter: 0,
+  });
+
   const [updateTask, setUpdateTask] = useState();
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const [time, setTime] = useState(0);
-  const [active, notActive] = useState();
-
-  useEffect(() => {
-    if (active) {
-      timeId = setInterval(() => {
-        setTime((time) => time + 1);
-      }, 1000);
-    } else {
-      clearInterval(timeId);
-    }
-    return () => clearInterval(timeId);
-  }, [active]);
-
-  const startButton = (timeId) => {
-    notActive(true) 
-    timeId(0)
-  
-  }
-  const stopButton = (timeId) => {
-    notActive(false)
-    timeId(0)
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   const taskChangeHandler = (event) => {
     setTask((task) => {
@@ -87,8 +37,19 @@ export function TaskListProvider({ children }) {
     if (taskName === "" && status === "") {
       alert("please enter Something");
     } else {
-      notActive(true);
-      setTaskList([...taskList, { id, taskName, status }]);
+      setTaskList((taskList) => {
+        taskList.push({ id, taskName, status, counter: 0, counterId: 0 });
+        return structuredClone(taskList);
+      });
+
+      const counterId = setInterval(() => {
+        setTaskList((taskList) => {
+          const task = taskList.find((task) => task.id === id);
+          task.counter++;
+          task.counterId = counterId;
+          return structuredClone(taskList);
+        });
+      }, 1000);
     }
   };
 
@@ -118,6 +79,11 @@ export function TaskListProvider({ children }) {
     setTaskList(newTaskList);
   };
 
+  const startButton = (counterId) => {};
+  const stopButton = (counterId) => {
+    clearInterval(counterId);
+  };
+
   return (
     <taskListContext.Provider
       value={{
@@ -135,11 +101,8 @@ export function TaskListProvider({ children }) {
         editHandler,
         updateHandler,
         removeHandler,
-        time,
-        timeId,
-        notActive,
         startButton,
-        stopButton
+        stopButton,
       }}
     >
       {children}

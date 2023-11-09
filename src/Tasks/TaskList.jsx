@@ -11,10 +11,8 @@ const TaskList = () => {
     editHandler,
     handleInput,
     updateTask,
-    time,
-    timeId,
     startButton,
-    stopButton
+    stopButton,
   } = useContext(taskListContext);
 
   return (
@@ -23,7 +21,7 @@ const TaskList = () => {
         task.id === updateTask ? (
           <ul className="flex-col-center" key={index}>
             <li>
-              {task.id} {timeId} {" "}
+              {task.id}{" "}
               <input
                 type="text"
                 placeholder="Enter Task Name"
@@ -47,8 +45,9 @@ const TaskList = () => {
               {task.id} {task.taskName} {task.status}{" "}
               <button onClick={() => editHandler(task.id)}>Edit</button>{" "}
               <button onClick={() => removeHandler(task.id)}>Remove</button>{" "}
-              <button onClick={startButton}>Start</button> {time}{" "}
-              <button onClick={stopButton}>Stop</button>
+              <button onClick={() => startButton(task.counterId)}>Start</button>{" "}
+              {task.counter}{" "}
+              <button onClick={() => stopButton(task.counterId)}>Stop</button>
             </li>
           </ul>
         )

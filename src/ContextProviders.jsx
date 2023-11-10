@@ -32,7 +32,7 @@ export function TaskListProvider({ children }) {
   const addTaskHandler = (event) => {
     event.preventDefault();
     ref.current.value = "";
-    reff.current.value = "";
+    reff.current.value = ""; 
 
     if (taskName === "" && status === "") {
       alert("please enter Something");
@@ -42,15 +42,24 @@ export function TaskListProvider({ children }) {
         return structuredClone(taskList);
       });
 
-      const counterId = setInterval(() => {
+      function count () {
         setTaskList((taskList) => {
           const task = taskList.find((task) => task.id === id);
           task.counter++;
           task.counterId = counterId;
           return structuredClone(taskList);
         });
-      }, 1000);
+      }
+
+      const counterId = setInterval(count, 1000);
     }
+  };
+
+  const startButton = () => {
+   
+  };
+  const stopButton = (counterId) => {
+    clearInterval(counterId);
   };
 
   function handleInput(event) {
@@ -77,11 +86,6 @@ export function TaskListProvider({ children }) {
   const removeHandler = (id) => {
     const newTaskList = taskList.filter((li) => li.id !== id);
     setTaskList(newTaskList);
-  };
-
-  const startButton = (counterId) => {};
-  const stopButton = (counterId) => {
-    clearInterval(counterId);
   };
 
   return (
